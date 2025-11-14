@@ -1,6 +1,6 @@
 from src.actions import Action
 from src.config import B, L, R, S, State
-from src.turing_mapping import Rule
+from src.helpers import Rule
 
 
 class TestRuleInitialization:

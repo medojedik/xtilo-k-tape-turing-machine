@@ -1,5 +1,5 @@
 from src.config import B
-from src.turing_mapping import Tape
+from src.helpers import Tape
 
 
 class TestTape:
