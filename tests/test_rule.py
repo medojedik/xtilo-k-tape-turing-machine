@@ -1,5 +1,5 @@
 from src.actions import Action
-from src.config import B, L, R, S, State
+from src.config import B, Direction, State
 from src.helpers import Rule
 
 
@@ -10,7 +10,7 @@ class TestRuleInitialization:
         """Test creating a Rule with basic parameters"""
         q0 = State("q0")
         q1 = State("q1")
-        actions = Action(read_symbol="0", write_symbol="1", operation=R)
+        actions = Action(read_symbol="0", write_symbol="1", operation=Direction.R)
 
         rule = Rule(current_state=q0, next_state=q1, actions=[actions])
 
@@ -18,7 +18,7 @@ class TestRuleInitialization:
         assert rule.next_state == q1
         assert rule.actions == [actions]
         assert rule.write_symbols == ["1"]
-        assert rule.operation == [R]
+        assert rule.operation == [Direction.R]
         assert rule.read_symbols == ["0"]
 
     def test_rule_with_multiple_actions(self):
@@ -26,16 +26,16 @@ class TestRuleInitialization:
         q0 = State("q0")
         q1 = State("q1")
         actions = [
-            Action(read_symbol="0", write_symbol="1", operation=R),
-            Action(read_symbol="1", write_symbol="0", operation=L),
-            Action(read_symbol="X", write_symbol="Y", operation=S),
+            Action(read_symbol="0", write_symbol="1", operation=Direction.R),
+            Action(read_symbol="1", write_symbol="0", operation=Direction.L),
+            Action(read_symbol="X", write_symbol="Y", operation=Direction.S),
         ]
 
         rule = Rule(current_state=q0, next_state=q1, actions=actions)
 
         assert len(rule.actions) == 3
         assert rule.write_symbols == ["1", "0", "Y"]
-        assert rule.operation == [R, L, S]
+        assert rule.operation == [Direction.R, Direction.L, Direction.S]
         assert rule.operation == [1, -1, 0]
         assert rule.read_symbols == ["0", "1", "X"]
 
@@ -48,8 +48,8 @@ class TestRuleMatches:
         q0 = State("q0")
         q1 = State("q1")
         actions = [
-            Action(read_symbol="0", write_symbol="1", operation=R),
-            Action(read_symbol="1", write_symbol="0", operation=L),
+            Action(read_symbol="0", write_symbol="1", operation=Direction.R),
+            Action(read_symbol="1", write_symbol="0", operation=Direction.L),
         ]
         rule = Rule(current_state=q0, next_state=q1, actions=actions)
 
@@ -59,7 +59,7 @@ class TestRuleMatches:
         """Test rule does not match when state is different"""
         q0 = State("q0")
         q1 = State("q1")
-        actions = [Action(read_symbol="0", write_symbol="1", operation=R)]
+        actions = [Action(read_symbol="0", write_symbol="1", operation=Direction.R)]
         rule = Rule(current_state=q0, next_state=q1, actions=actions)
 
         assert rule.matches(q1, ["0"]) is False
@@ -69,8 +69,8 @@ class TestRuleMatches:
         q0 = State("q0")
         q1 = State("q1")
         actions = [
-            Action(read_symbol="0", write_symbol="1", operation=R),
-            Action(read_symbol="1", write_symbol="0", operation=L),
+            Action(read_symbol="0", write_symbol="1", operation=Direction.R),
+            Action(read_symbol="1", write_symbol="0", operation=Direction.L),
         ]
         rule = Rule(current_state=q0, next_state=q1, actions=actions)
 
@@ -83,8 +83,8 @@ class TestRuleMatches:
         q0 = State("q0")
         q1 = State("q1")
         actions = [
-            Action(read_symbol="*", write_symbol="1", operation=R),
-            Action(read_symbol="1", write_symbol="0", operation=L),
+            Action(read_symbol="*", write_symbol="1", operation=Direction.R),
+            Action(read_symbol="1", write_symbol="0", operation=Direction.L),
         ]
         rule = Rule(current_state=q0, next_state=q1, actions=actions)
 

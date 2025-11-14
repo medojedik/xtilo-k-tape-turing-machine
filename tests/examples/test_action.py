@@ -1,6 +1,6 @@
 import src.actions as actions_module
 from src.actions import Action
-from src.config import WILDCARD, B, L, R, S
+from src.config import WILDCARD, B, Direction
 
 
 class TestActionInitialization:
@@ -8,30 +8,27 @@ class TestActionInitialization:
 
     def test_action_basic_initialization(self):
         """Test creating an Action with basic parameters"""
-        action = Action(read_symbol="0", write_symbol="1", operation=R)
+        action = Action(read_symbol="0", write_symbol="1", operation=Direction.R)
 
         assert action.read_symbol == "0"
         assert action.write_symbol == "1"
-        assert action.operation == R
-        assert action.operation == 1
+        assert action.operation == Direction.R
 
     def test_action_with_blank_symbol(self):
         """Test Action with blank symbol"""
-        action = Action(read_symbol=B, write_symbol="0", operation=L)
+        action = Action(read_symbol=B, write_symbol="0", operation=Direction.L)
 
         assert action.read_symbol == B
         assert action.write_symbol == "0"
-        assert action.operation == L
-        assert action.operation == -1
+        assert action.operation == Direction.L
 
     def test_action_with_wildcard(self):
         """Test Action with wildcard symbol"""
-        action = Action(read_symbol=WILDCARD, write_symbol=WILDCARD, operation=S)
+        action = Action(read_symbol=WILDCARD, write_symbol=WILDCARD, operation=Direction.S)
 
         assert action.read_symbol == WILDCARD
         assert action.write_symbol == WILDCARD
-        assert action.operation == S
-        assert action.operation == 0
+        assert action.operation == Direction.S
 
 
 class TestActionMatches:
@@ -39,8 +36,8 @@ class TestActionMatches:
 
     def test_wildcard_input_matches_anything(self):
         """Test that wildcard input symbol matches any action read symbol"""
-        action_0 = Action(read_symbol="0", write_symbol="1", operation=R)
-        action_1 = Action(read_symbol="1", write_symbol="0", operation=L)
+        action_0 = Action(read_symbol="0", write_symbol="1", operation=Direction.R)
+        action_1 = Action(read_symbol="1", write_symbol="0", operation=Direction.L)
 
         # All actions should match wildcard input
         assert action_0.matches(WILDCARD) is True
@@ -51,7 +48,7 @@ class TestActionMatches:
         symbols = ["0", "1", "X", "Y", B]
 
         for sym in symbols:
-            action = Action(read_symbol=sym, write_symbol="dummy", operation=S)
+            action = Action(read_symbol=sym, write_symbol="dummy", operation=Direction.S)
             # Should match itself
             assert action.matches(sym) is True
             # Should not match other symbols (except wildcard)
@@ -73,8 +70,7 @@ class TestShortcutRegistration:
         assert isinstance(shortcut, Action)
         assert shortcut.read_symbol == B
         assert shortcut.write_symbol == "0"
-        assert shortcut.operation == R
-        assert shortcut.operation == 1
+        assert shortcut.operation == Direction.R
 
     def test_shortcut_l01(self):
         """Test LWW: operation L, read W, write 'W"""
@@ -84,8 +80,7 @@ class TestShortcutRegistration:
         assert isinstance(shortcut, Action)
         assert shortcut.read_symbol == WILDCARD
         assert shortcut.write_symbol == WILDCARD
-        assert shortcut.operation == L
-        assert shortcut.operation == -1
+        assert shortcut.operation == Direction.L
 
     def test_shortcut_s11(self):
         """Test S10: operation S, read '1', write '0'"""
@@ -95,5 +90,4 @@ class TestShortcutRegistration:
         assert isinstance(shortcut, Action)
         assert shortcut.read_symbol == "1"
         assert shortcut.write_symbol == "0"
-        assert shortcut.operation == S
-        assert shortcut.operation == 0
+        assert shortcut.operation == Direction.S

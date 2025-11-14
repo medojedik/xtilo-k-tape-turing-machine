@@ -1,10 +1,17 @@
-from typing import Literal
+from enum import IntEnum
 
 # --- Global Constants ---
 B = "#"
 WILDCARD = "*"  # New wildcard symbol
-R, L, S = 1, -1, 0
-Direction = Literal["R", "L", "S"]
+
+
+# --- Direction Enum ---
+class Direction(IntEnum):
+    """Direction for head movement: R (right), L (left), S (stay)"""
+
+    R = 1
+    L = -1
+    S = 0
 
 
 # --- State Definition ---

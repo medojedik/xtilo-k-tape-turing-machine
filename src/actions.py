@@ -1,11 +1,11 @@
 from dataclasses import dataclass
 
-from src.config import WILDCARD, B, L, R, S
+from src.config import WILDCARD, B, Direction
 
 
 # --- Define Action class ---
 class Action:
-    def __init__(self, read_symbol: str, write_symbol: str, operation: int) -> None:
+    def __init__(self, read_symbol: str, write_symbol: str, operation: Direction) -> None:
         self.read_symbol = read_symbol
         self.write_symbol = write_symbol
         self.operation = operation
@@ -28,9 +28,9 @@ class Moves:
 # --- Helper Functions ---
 def make_moves(read_sym: str, write_sym: str) -> Moves:
     return Moves(
-        R=Action(read_sym, write_sym, R),
-        L=Action(read_sym, write_sym, L),
-        S=Action(read_sym, write_sym, S),
+        R=Action(read_sym, write_sym, Direction.R),
+        L=Action(read_sym, write_sym, Direction.L),
+        S=Action(read_sym, write_sym, Direction.S),
     )
 
 
