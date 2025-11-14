@@ -1,4 +1,4 @@
-.PHONY: help clean install install-dev lint lint-check type-check check all uv-install lock
+.PHONY: help clean install install-dev lint lint-check type-check check all uv-install lock test
 
 VENV := .venv
 PYTHON := $(VENV)/bin/python
@@ -22,6 +22,9 @@ help:
 	@echo "  make type-check		- Run type checking with Mypy"
 	@echo "  make check				- Run all checks (lint + type-check)"
 	@echo "  make all				- Clean, format, and run all checks"
+	@echo "  make uv-install		- Install uv via Homebrew"
+	@echo "  make lock				- Compile requirements using uv"
+	@echo "  make test				- Run tests with pytest"
 
 clean:
 	@echo "Cleaning temporary files and caches..."
@@ -74,7 +77,7 @@ type-check: install-dev
 check: lint-check type-check
 	@echo "All checks passed!"
 
-all: clean lint type-check
+all: clean lint type-check test
 	@echo "All tasks completed!"
 
 uv-install:
@@ -88,3 +91,12 @@ lock: uv-install
 	uv pip compile pyproject.toml -o $(REQ_DIR)/base.txt
 	uv pip compile --extra dev pyproject.toml -o $(REQ_DIR)/dev.txt
 	@echo "Lockfiles written to $(REQ_DIR)/base.txt and $(REQ_DIR)/dev.txt"
+
+test: install-dev
+	@echo "Running tests with pytest..."
+	$(PYTHON) -m pytest tests/
+
+
+test-examples: install-dev
+	@echo "Running tests with pytest..."
+	$(PYTHON) -m pytest -s tests/examples/
