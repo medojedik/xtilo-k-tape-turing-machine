@@ -46,8 +46,6 @@ class TuringMachine:
         self.current_state = Q_Start
         rules = []
         rules_strings = []
-        # self.print_tape()
-
         while steps < max_steps:
             rule = self.read_rule()
             rules.append(rule)
