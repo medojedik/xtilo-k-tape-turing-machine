@@ -6,7 +6,9 @@ from src.config import B, State
 
 # --- Helper Classes ---
 class Tape:
-    def __init__(self, input_str: list[str] = []) -> None:
+    def __init__(self, input_str: list[str] = None) -> None:
+        if input_str is None:
+            input_str = []
         self.symbols: dict[int, str] = defaultdict(lambda: B, dict(enumerate(input_str)))
         self.input_str = "".join(input_str)
 
