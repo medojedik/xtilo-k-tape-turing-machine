@@ -27,25 +27,25 @@ class Test0n1n:
 
         # Rule groups for clarity
         find_first_0 = [
-            Rule(Q_Start, q1, [act.R0X], "mark first 0 as X, move right"),
-            Rule(Q_Start, q3, [act.RYY], "no more 0s, check if done"),
+            Rule(Q_Start, q1, [act.R0X]),  # mark first 0 as X, move right
+            Rule(Q_Start, q3, [act.RYY]),  # no more 0s, check if done
         ]
 
         find_left_most_1 = [
-            Rule(q1, q1, [act.R00], "skip unmarked 0s"),
-            Rule(q1, q1, [act.RYY], "skip marked 1s (Y)"),
-            Rule(q1, q2, [act.L1Y], "found 1, mark as Y, go back"),
+            Rule(q1, q1, [act.R00]),  # skip unmarked 0s
+            Rule(q1, q1, [act.RYY]),  # skip marked 1s (Y)
+            Rule(q1, q2, [act.L1Y]),  # found 1, mark as Y, go back
         ]
 
         find_left_most_0 = [
-            Rule(q2, q2, [act.LYY], "move left over marked 1s"),
-            Rule(q2, q2, [act.L00], "move left over unmarked 0s"),
-            Rule(q2, Q_Start, [act.RXX], "found marked 0, start next iteration"),
+            Rule(q2, q2, [act.LYY]),  # move left over marked 1s
+            Rule(q2, q2, [act.L00]),  # move left over unmarked 0s
+            Rule(q2, Q_Start, [act.RXX]),  # found marked 0, start next iteration
         ]
 
         find_end_of_tape = [
-            Rule(q3, q3, [act.RYY], "skip all marked symbols"),
-            Rule(q3, Q_End, [act.SBB], "reached blank, accept"),
+            Rule(q3, q3, [act.RYY]),  # skip all marked symbols
+            Rule(q3, Q_End, [act.SBB]),  # reached blank, accept
         ]
 
         return find_first_0 + find_left_most_1 + find_left_most_0 + find_end_of_tape
@@ -72,6 +72,6 @@ class Test0n1n:
 
         result = tm.run()
         if should_accept:
-            assert result["accepted"], f"Expected '{input_string}' to be accepted"
+            assert result["accepted"] == True, f"Expected '{input_string}' to be accepted"
         else:
-            assert not result["accepted"], f"Expected '{input_string}' to be rejected"
+            assert result["accepted"] == False, f"Expected '{input_string}' to be rejected"

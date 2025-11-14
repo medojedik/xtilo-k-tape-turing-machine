@@ -8,8 +8,13 @@ from src.config import B, State
 class Tape:
     def __init__(self, input_str: list[str] = []) -> None:
         self.symbols: dict[int, str] = defaultdict(lambda: B, dict(enumerate(input_str)))
+        self.input_str = "".join(input_str)
 
     def __str__(self) -> str:
+        sorted_items = sorted(self.symbols.items(), key=lambda x: x[0])
+        return "".join([v for k, v in sorted_items])
+
+    def stripped(self) -> str:
         sorted_items = sorted(self.symbols.items(), key=lambda x: x[0])
         return "".join([v for k, v in sorted_items if v != B])
 
@@ -25,7 +30,6 @@ class Rule:
         current_state: State,
         next_state: State,
         actions: list[Action],
-        description: str = "",
     ) -> None:
         self.current_state = current_state
         self.next_state = next_state
@@ -33,7 +37,6 @@ class Rule:
         self.write_symbols = [a.write_symbol for a in self.actions]
         self.operation = [a.operation for a in self.actions]
         self.read_symbols = [a.read_symbol for a in self.actions]
-        self.description = description
 
     def matches(self, state: State, symbols: list[str]) -> bool:
         """Check if this rule matches the given state and symbols"""

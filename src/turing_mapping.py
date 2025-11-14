@@ -5,9 +5,9 @@ from src.helpers import Head, Rule, Tape
 # --- Main TM Class ---
 class TuringMachine:
     def __init__(self, rules: list[Rule], tapes: list[Tape], heads: list[Head]) -> None:
-        self.rules = rules  # (q0, [0, 1, B]) -> (q1, [1, 1, B], [R, R, R])
-        self.tapes = tapes  # [[#, 0, #], [#, 1, #], [#, #, #]]
-        self.heads = heads  # [0, 0, 0]
+        self.rules = rules
+        self.tapes = tapes
+        self.heads = heads
 
     def read_tape(self) -> list[str]:
         return [tape.symbols[head.position] for tape, head in zip(self.tapes, self.heads)]
