@@ -1,4 +1,5 @@
 from dataclasses import dataclass
+from typing import cast
 
 from src.config import WILDCARD, B, Direction
 
@@ -51,9 +52,11 @@ def register_rewrites(read_sym: str, write_targets: list[str]) -> None:
 
         # create shortcut names like RXY, LXY, SXY
         base = f"{normalize_symbol(read_sym)}{normalize_symbol(w)}"
-        globals().setdefault(f"R{base}", moves.R)
-        globals().setdefault(f"L{base}", moves.L)
-        globals().setdefault(f"S{base}", moves.S)
+
+        # Set the actual values
+        globals()[f"R{base}"] = moves.R
+        globals()[f"L{base}"] = moves.L
+        globals()[f"S{base}"] = moves.S
 
 
 # --- Register common shortcuts ---
@@ -63,3 +66,14 @@ register_rewrites(read_sym="X", write_targets=["1", "0", B, "X", "Y"])
 register_rewrites(read_sym="Y", write_targets=["1", "0", B, "X", "Y"])
 register_rewrites(read_sym=B, write_targets=["1", "0", B, "X", "Y"])
 register_rewrites(read_sym=WILDCARD, write_targets=[WILDCARD])
+
+
+# --- Module-level __getattr__ for type checking ---
+def __getattr__(name: str) -> Action:
+    """
+    Allow mypy to recognize dynamically created shortcut attributes.
+    At runtime, shortcuts are already in globals() from register_rewrites.
+    """
+    if name in globals():
+        return cast(Action, globals()[name])
+    raise AttributeError(f"module '{__name__}' has no attribute '{name}'")
