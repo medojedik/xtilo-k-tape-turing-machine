@@ -73,6 +73,6 @@ class Test0n1n:
 
         result = tm.run()
         if should_accept:
-            assert result["accepted"] == True, f"Expected '{input_string}' to be accepted"
+            assert result["accepted"], f"Expected '{input_string}' to be accepted"
         else:
-            assert result["accepted"] == False, f"Expected '{input_string}' to be rejected"
+            assert not result["accepted"], f"Expected '{input_string}' to be rejected"
