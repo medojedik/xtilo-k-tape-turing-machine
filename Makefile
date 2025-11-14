@@ -14,7 +14,7 @@ export PATH := /opt/homebrew/bin:$(HOME)/.local/bin:$(PATH)
 help:
 	@echo "Available commands:"
 	@echo "  make clean				- Remove temporary files and caches"
-	@echo "  make Install			- Install production dependencies"
+	@echo "  make install			- Install production dependencies"
 	@echo "  make install-dev		- Install development dependencies"
 	@echo "  make .venv				- Creates the virtual env in .venv/ dir"
 	@echo "  make lint				- Format code with Black and Isort"
