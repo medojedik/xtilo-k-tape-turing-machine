@@ -48,4 +48,4 @@ class Rule:
         return all(action.matches(symbol) for action, symbol in zip(self.actions, symbols))
 
     def __str__(self) -> str:
-        return f"δ({self.current_state}, ({', '.join(self.read_symbols)})) = ({self.next_state}, ({', '.join(self.write_symbols)}), ({', '.join(str(op.name) for op in self.operation)}))"
+        return f"δ({self.current_state}, ({', '.join(self.read_symbols)})) = ({self.next_state}, ({', '.join(self.write_symbols)}), ({', '.join(str(op) for op in self.operation)}))"

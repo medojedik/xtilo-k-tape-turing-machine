@@ -63,6 +63,7 @@ class TuringMachine:
             "initial_input": self.tapes[0].input_str,
             "encoded_rules_mappings": self.encode_rules(rules) if rules else {},
             "encoded_rules_binary": encode_rules_to_binary(rules),
+            "rules_executed": [r for r in rules_strings if r != "None"],
         }
 
         self._print_summary(result)
@@ -96,6 +97,14 @@ class TuringMachine:
 
         print(f"\nInitial Input: {result['initial_input']}")
         print(f"Final Output:  {result['final_return_content']}")
+
+        print("\n--- Executed Rules ---")
+        if result.get("rules_executed"):
+            for idx, rule_str in enumerate(result["rules_executed"]):
+                print(f"{idx}: {rule_str}")
+            print(f"Total executed rules: {len(result['rules_executed'])}")
+        else:
+            print("(No rules executed)")
 
         print("\n--- All Tape Contents and Head Positions ---")
         self.print_tape()
