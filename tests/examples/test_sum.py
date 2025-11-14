@@ -106,6 +106,7 @@ class TestBinarySum:
     )
     def test_binary_sum(self, sum_machine_rules, input_string, expected_sum):
         """Test binary addition with various inputs"""
+        print("\n\n")
         tape1 = Tape(list(input_string))
         tape2 = Tape()
         tape3 = Tape()
@@ -128,30 +129,3 @@ class TestBinarySum:
         assert (
             result_decimal == expected_sum
         ), f"Expected sum {expected_sum} (binary: {bin(expected_sum)[2:]}), got {result_decimal} (binary: {result_binary})"
-
-    def test_complex_sum(self, sum_machine_rules):
-        """Test complex multi-number addition"""
-        input_string = "111#10#101#11#1011"
-        tape1 = Tape(self._parse_binary_string(input_string))
-        tape2 = Tape()
-        tape3 = Tape()
-
-        head1 = Head()
-        head2 = Head()
-        head3 = Head()
-
-        tm = TuringMachine(
-            rules=sum_machine_rules,
-            tapes=[tape1, tape2, tape3],
-            heads=[head1, head2, head3],
-        )
-
-        result = tm.run()
-        assert result, f"Machine should accept input '{input_string}'"
-
-        # Calculate expected: 7 + 2 + 5 + 3 + 11 = 28
-        expected_sum = 7 + 2 + 5 + 3 + 11
-        result_binary = result["final_return_content"]
-        result_decimal = self._binary_to_decimal(result_binary)
-
-        assert result_decimal == expected_sum

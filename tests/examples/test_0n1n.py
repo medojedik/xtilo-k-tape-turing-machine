@@ -66,6 +66,7 @@ class Test0n1n:
     )
     def test_0n1n_recognition(self, turing_machine_rules, input_string, should_accept):
         """Test that the TM correctly recognizes or rejects strings"""
+        print("\n\n")
         tape = Tape(list(input_string))
         head = Head()
         tm = TuringMachine(rules=turing_machine_rules, tapes=[tape], heads=[head])
