@@ -77,7 +77,7 @@ type-check: install-dev
 check: lint-check type-check
 	@echo "All checks passed!"
 
-all: clean lint type-check
+all: clean lint type-check test
 	@echo "All tasks completed!"
 
 uv-install:

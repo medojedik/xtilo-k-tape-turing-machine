@@ -1,4 +1,4 @@
-from src.config import State, Q_Start, Q_End
+from src.config import Q_End, Q_Start, State
 
 
 def test_state_equality():
