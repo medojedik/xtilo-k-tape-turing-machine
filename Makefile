@@ -92,11 +92,11 @@ lock: uv-install
 	uv pip compile --extra dev pyproject.toml -o $(REQ_DIR)/dev.txt
 	@echo "Lockfiles written to $(REQ_DIR)/base.txt and $(REQ_DIR)/dev.txt"
 
-test:
+test: install-dev
 	@echo "Running tests with pytest..."
 	$(PYTHON) -m pytest tests/
 
 
-test-examples:
+test-examples: install-dev
 	@echo "Running tests with pytest..."
 	$(PYTHON) -m pytest -s tests/examples/
