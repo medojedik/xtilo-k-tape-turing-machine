@@ -1,4 +1,4 @@
-.PHONY: help clean install install-dev lint lint-check type-check check all
+.PHONY: help clean install install-dev lint lint-check type-check check all uv-install lock
 
 VENV := .venv
 PYTHON := $(VENV)/bin/python
@@ -6,18 +6,22 @@ PIP := $(VENV)/bin/pip
 BLACK := $(VENV)/bin/black
 ISORT := $(VENV)/bin/isort
 MYPY := $(VENV)/bin/mypy
+REQ_DIR := requirements
+
+# Ensure Homebrew and user's local bin are on PATH for uv/brew discovery
+export PATH := /opt/homebrew/bin:$(HOME)/.local/bin:$(PATH)
 
 help:
 	@echo "Available commands:"
-	@echo "  make clean            - Remove temporary files and caches"
-	@echo "  make install          - Install production dependencies"
-	@echo "  make install-dev      - Install development dependencies"
-	@echo "  make .venv		       - Creates the virtual env in .venv/ dir"
-	@echo "  make lint         	   - Format code with Black and Isort"
-	@echo "  make lint-check       - Run linting checks (Isort and Black in check mode)"
-	@echo "  make type-check       - Run type checking with Mypy"
-	@echo "  make check            - Run all checks (lint + type-check)"
-	@echo "  make all              - Clean, format, and run all checks"
+	@echo "  make clean				- Remove temporary files and caches"
+	@echo "  make Install			- Install production dependencies"
+	@echo "  make install-dev		- Install development dependencies"
+	@echo "  make .venv				- Creates the virtual env in .venv/ dir"
+	@echo "  make lint				- Format code with Black and Isort"
+	@echo "  make lint-check		- Run linting checks (Isort and Black in check mode)"
+	@echo "  make type-check		- Run type checking with Mypy"
+	@echo "  make check				- Run all checks (lint + type-check)"
+	@echo "  make all				- Clean, format, and run all checks"
 
 clean:
 	@echo "Cleaning temporary files and caches..."
@@ -72,3 +76,15 @@ check: lint-check type-check
 
 all: clean lint type-check
 	@echo "All tasks completed!"
+
+uv-install:
+	@echo "Installing uv via Homebrew..."
+	brew install uv
+	uv --version
+
+lock: uv-install
+	@echo "Compiling requirements with uv..."
+	@mkdir -p $(REQ_DIR)
+	uv pip compile pyproject.toml -o $(REQ_DIR)/base.txt
+	uv pip compile --extra dev pyproject.toml -o $(REQ_DIR)/dev.txt
+	@echo "Lockfiles written to $(REQ_DIR)/base.txt and $(REQ_DIR)/dev.txt"
