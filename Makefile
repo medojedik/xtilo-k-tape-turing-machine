@@ -95,3 +95,8 @@ lock: uv-install
 test:
 	@echo "Running tests with pytest..."
 	$(PYTHON) -m pytest tests/
+
+
+test-examples:
+	@echo "Running tests with pytest..."
+	$(PYTHON) -m pytest tests/examples/
