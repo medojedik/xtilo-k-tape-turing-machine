@@ -94,7 +94,7 @@ Ve výstupu uvidíte:
 ## 6. Struktura projektu
 
 ```
-src/                # Implementace k-páskového turingova stroje, akcí, pomocných tříd a kódování
+src/                # Implementace k-páskového Turingova stroje, akcí, pomocných tříd a kódování
 tests/              # Jednotkové testy + příklady jako testovací scénáře
 tests/examples/     # Spustitelné demo skripty
 Makefile            # Zkrácené příkazy pro běžné úkony
@@ -119,20 +119,20 @@ Každý prvek (stav, symbol) je mapován na celé číslo. Číslo `n` se v uná
 Implementace: viz `encode_rules_to_binary()` v `src/encoding.py`.
 
 ---
-## 9. Rychlý přehled příkazů
+## 8. Rychlý přehled příkazů
 
 ```bash
-make venv                       # vytvoří virtuální prostředí
-make install-dev                # instalace vývoj závislostí
-make lint                       # formátování
-make type-check                 # mypy
-make test                       # jednotkové testy
-make test-examples              # příklady s výstupem
-python examples/demo_sum.py     # spuštění demo skriptu
+make venv                               # vytvoří virtuální prostředí
+make install-dev                        # instalace vývojových závislostí
+make lint                               # formátování
+make type-check                         # mypy
+make test                               # jednotkové testy
+make test-examples                      # příklady s výstupem
+python tests/examples/test_sum.py       # spuštění demo skriptu
 ```
 
 ---
-## 10. Zadání projektu
+## 9. Zadání projektu
 
 **Zadání:**
 
@@ -159,10 +159,10 @@ a aby poskytl zakódovanou podobu simulovaného stroje.
 - Vstupem `fun` je entita (sekvence) čísel \(x_i\) kódovaných v binární soustavě.
 - Jednotlivé objekty vstupní sekvence jsou odděleny prázdným symbolem (např. `#`).
 
-V projektu je tato část demonstrována skriptem `examples/demo_sum.py`, který sčítá binární čísla oddělená prázdným symbolem a výsledný součet ukládá na výstupní pásku.
+V projektu je tato část demonstrována skriptem `tests/examples/test_sum.py `, který sčítá binární čísla oddělená prázdným symbolem a výsledný součet ukládá na výstupní pásku.
 
 ---
-## 11. Zdroje a reference
+## 10. Zdroje a reference
 
 Primární studijní a konzultační materiály použité při tvorbě projektu:
 
