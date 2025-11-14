@@ -63,7 +63,7 @@ class TestShortcutRegistration:
     """Test that shortcuts like R10 are correctly registered"""
 
     def test_shortcut_r10(self):
-        """Test RB0: operation R, read B, write '0'"""
+        """Test RB0: operation R, read B, write 0"""
         shortcut = getattr(actions_module, "RB0", None)
 
         assert shortcut is not None, "Shortcut RB0 should be registered"
@@ -73,7 +73,7 @@ class TestShortcutRegistration:
         assert shortcut.operation == Direction.R
 
     def test_shortcut_l01(self):
-        """Test LWW: operation L, read W, write 'W"""
+        """Test LWW: operation L, read W, write W"""
         shortcut = getattr(actions_module, "LWW", None)
 
         assert shortcut is not None, "Shortcut LWW should be registered"
@@ -83,7 +83,7 @@ class TestShortcutRegistration:
         assert shortcut.operation == Direction.L
 
     def test_shortcut_s11(self):
-        """Test S10: operation S, read '1', write '0'"""
+        """Test S10: operation S, read 1, write 0"""
         shortcut = getattr(actions_module, "S10", None)
 
         assert shortcut is not None, "Shortcut S10 should be registered"
