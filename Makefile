@@ -99,4 +99,4 @@ test:
 
 test-examples:
 	@echo "Running tests with pytest..."
-	$(PYTHON) -m pytest tests/examples/
+	$(PYTHON) -m pytest -s tests/examples/
