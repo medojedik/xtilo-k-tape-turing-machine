@@ -13,6 +13,10 @@ class Direction(IntEnum):
     L = -1
     S = 0
 
+    def __str__(self) -> str:
+        """Return the name of the direction (R, L, or S)"""
+        return self.name
+
 
 # --- State Definition ---
 class State:
