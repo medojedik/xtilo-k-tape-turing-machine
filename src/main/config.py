@@ -1,7 +1,7 @@
 # --- Global Constants ---
 
 
-# --- State Definition (Simplified from your original State class
+# --- State Definition ---
 class State:
     pass
 

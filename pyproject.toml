@@ -7,7 +7,7 @@ name = "k-tape-turing-machine-project"
 version = "0.1.0"
 description = "K-tape Turing machine implementation for XTILO course project"
 readme = "README.md"
-requires-python = ">=3.9"
+requires-python = ">=3.10"
 authors = [
     {name = "Eliška Kremeňová", email = "eliskafm@seznam.cz"},
 ]
@@ -33,7 +33,7 @@ dev = [
 
 [tool.black]
 line-length = 100
-target-version = ['py38', 'py39', 'py310', 'py311', 'py312']
+target-version = ['py310']
 include = '\.pyi?$'
 extend-exclude = '''
 /(
