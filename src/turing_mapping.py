@@ -1,4 +1,5 @@
 from src.config import WILDCARD, Direction, Q_Start
+from src.encoding import create_encoding_mappings, encode_rules_to_binary
 from src.helpers import Head, Rule, Tape
 
 
@@ -45,6 +46,8 @@ class TuringMachine:
         self.current_state = Q_Start
         rules = []
         rules_strings = []
+        # self.print_tape()
+
         while steps < max_steps:
             rule = self.read_rule()
             rules.append(rule)
@@ -54,31 +57,56 @@ class TuringMachine:
             self.print_tape()
             self.run_rule(rule)
             steps += 1
-        if self.current_state.end:
-            print(f"Accepted in {steps} steps")
-            return {
-                "accepted": True,
-                "final_return_content": str(self.tapes[-1]),
-                "endoded_rules_world": ""
-            }
-        else:
-            print(f"Rejected in {steps} steps")
-            return {
-                "accepted": False,
-                "final_return_content": str(self.tapes[-1]),
-                "endoded_rules_world": ""
-            }
-        
-    def print_tape(self):
+
+        result = {
+            "accepted": self.current_state.end,
+            "steps": steps,
+            "final_return_content": self.tapes[-1].stripped(),
+            "initial_input": self.tapes[0].input_str,
+            "encoded_rules_mappings": self.encode_rules(rules) if rules else {},
+            "encoded_rules_binary": encode_rules_to_binary(rules),
+        }
+
+        self._print_summary(result)
+
+        return result
+
+    def print_tape(self) -> None:
         for i, (tape, head) in enumerate(zip(self.tapes, self.heads)):
-            symbols = [tape.symbols[j] for j in range(-10, 15)]
-            head_idx = head.position + 10
-            if 0 <= head_idx < len(symbols):
-                symbols[head_idx] = f"[{symbols[head_idx]}]"
-            tape_str = "".join(symbols)
+            tape_str = str(tape) if str(tape) else "#"
+            pos = head.position
+            if pos >= 0:
+                tape_str = "##" + tape_str[:pos] + f"[{tape_str[pos]}]" + tape_str[pos + 1 :] + "##"
+            else:
+                tape_str = "##" + tape_str[:pos] + f"[{tape_str[pos]}]" + "##"
             print(f"Tape {i}: {tape_str}")
 
-    def encode_rules(self) -> str:
-        """Encode the rules into a string representation (placeholder)"""
+    def encode_rules(self, rules: list[Rule | None]) -> dict[str, dict]:
+        """
+        Return encoding mappings for provided rules including possible None entries.
+        """
+        filtered: list[Rule] = [r for r in rules if r is not None]
+        return create_encoding_mappings(filtered)
 
-        return "Encoded rules placeholder"
+    def _print_summary(self, result: dict) -> None:
+        print("\n" + "=" * 80)
+        if result["accepted"]:
+            print(f"✓ ACCEPTED in {result['steps']} steps")
+        else:
+            print(f"✗ REJECTED in {result['steps']} steps")
+        print("=" * 80)
+
+        print(f"\nInitial Input: {result['initial_input']}")
+        print(f"Final Output:  {result['final_return_content']}")
+
+        print("\n--- All Tape Contents and Head Positions ---")
+        self.print_tape()
+
+        print("\n--- Encoding Information ---")
+        print("State Mappings:", result["encoded_rules_mappings"]["states"])
+        print("Symbol Mappings:", result["encoded_rules_mappings"]["symbols"])
+        print("Direction Mappings:", result["encoded_rules_mappings"]["directions"])
+
+        print("\n--- Binary Encoded Rules ---")
+        print(result["encoded_rules_binary"])
+        print("=" * 80 + "\n")
