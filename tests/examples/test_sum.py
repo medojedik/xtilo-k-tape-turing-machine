@@ -129,3 +129,7 @@ class TestBinarySum:
         assert (
             result_decimal == expected_sum
         ), f"Expected sum {expected_sum} (binary: {bin(expected_sum)[2:]}), got {result_decimal} (binary: {result_binary})"
+
+
+if __name__ == "__main__":
+    pytest.main(["-s", __file__])

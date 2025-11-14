@@ -76,3 +76,7 @@ class Test0n1n:
             assert result["accepted"], f"Expected '{input_string}' to be accepted"
         else:
             assert not result["accepted"], f"Expected '{input_string}' to be rejected"
+
+
+if __name__ == "__main__":
+    pytest.main(["-s", __file__])
