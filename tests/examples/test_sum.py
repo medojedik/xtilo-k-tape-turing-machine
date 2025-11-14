@@ -125,7 +125,7 @@ class TestBinarySum:
         result_binary = result["final_return_content"]
         result_decimal = int(result_binary, 2)
 
-        assert result["accepted"] == True, f"Machine should accept input '{input_string}'"
+        assert result["accepted"], f"Machine should accept input '{input_string}'"
         assert (
             result_decimal == expected_sum
         ), f"Expected sum {expected_sum} (binary: {bin(expected_sum)[2:]}), got {result_decimal} (binary: {result_binary})"
