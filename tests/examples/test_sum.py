@@ -16,7 +16,7 @@ Algorithm:
 import pytest
 
 import src.actions as act
-from src.config import B, Q_End, Q_Start, State
+from src.config import Q_End, Q_Start, State
 from src.turing_mapping import Head, Rule, Tape, TuringMachine
 
 
